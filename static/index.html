@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Recorder</title>
+</head>
+<body>
+    <h1>Audio Recorder</h1>
+
+    <button id="startRecording">Start Recording</button>
+    <button id="stopRecording" disabled>Stop Recording</button>
+    <br>
+
+    <input type="file" id="audioFileInput" accept="audio/*">
+
+    <script>
+        let mediaRecorder
+        let chunks = []
+
+        const startRecordingButton = document.getElementById('startRecording')
+        const stopRecordingButton = document.getElementById('stopRecording')
+        const audioFileInput = document.getElementById('audioFileInput')
+
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(function(stream) {
+                mediaRecorder = new MediaRecorder(stream)
+
+                mediaRecorder.ondataavailable = function(event) {
+                    chunks.push(event.data)
+                }
+
+                mediaRecorder.onstop = function() {
+                    const blob = new Blob(chunks, { type: 'audio/mpeg' })
+                    chunks = []
+
+                    if (audioFileInput.files.length > 0) {
+                        const file = audioFileInput.files[0]
+                        const formData = new FormData()
+                        formData.append('file', file)
+
+                        fetch('http://localhost:8000/upload', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.text())
+                        .then(data => console.log(data))
+                        .catch(error => console.error('Error:', error))
+                    } else {
+
+                        const formData = new FormData()
+                        formData.append('file', blob, 'recording.mp3')
+
+                        fetch('http://localhost:8000/upload', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.text())
+                        .then(data => console.log(data))
+                        .catch(error => console.error('Error:', error))
+                    }
+                }
+            })
+            .catch(function(error) {
+                console.error('Microphone access error:', error)
+            })
+
+        startRecordingButton.onclick = function() {
+            mediaRecorder.start()
+            startRecordingButton.disabled = true
+            stopRecordingButton.disabled = false
+        }
+
+        stopRecordingButton.onclick = function() {
+            mediaRecorder.stop()
+            startRecordingButton.disabled = false
+            stopRecordingButton.disabled = true
+        }
+    </script>
+</body>
+</html>
