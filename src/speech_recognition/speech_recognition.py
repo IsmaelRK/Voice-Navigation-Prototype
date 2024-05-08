@@ -1,16 +1,12 @@
 import os
 from dotenv import load_dotenv
-
-from pathlib import Path
-import hashlib
 import google.generativeai as genai
 
 
-def send_to_gemini(mp3_file):
+def send_to_gemini(mp3_file_path, mp3_file_name):
 
     load_dotenv()
     api_key = os.getenv("API_KEY")
-
     genai.configure(api_key=api_key)
 
     generation_config = {
@@ -43,13 +39,11 @@ def send_to_gemini(mp3_file):
                                   generation_config=generation_config,
                                   safety_settings=safety_settings)
 
-    uploaded_files = []
     prompt = "Transcreva o audio:"
-    your_file = genai.upload_file(path=mp3_file)
+    file_to_upload = genai.upload_file(path=mp3_file_path, display_name=mp3_file_name)
 
-
-    response = model.generate_content([prompt, your_file])
+    response = model.generate_content([prompt, file_to_upload])
     print(response.text)
 
-    for uploaded_file in uploaded_files:
-        genai.delete_file(name=uploaded_file.name)
+    print(mp3_file_name)
+    genai.delete_file(name=file_to_upload.name)
