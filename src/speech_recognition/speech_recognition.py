@@ -47,8 +47,6 @@ def send_to_gemini(mp3_file):
     prompt = "Transcreva o audio:"
     your_file = genai.upload_file(path=mp3_file)
 
-    convo = model.start_chat(history=[
-    ])
 
     response = model.generate_content([prompt, your_file])
     print(response.text)
