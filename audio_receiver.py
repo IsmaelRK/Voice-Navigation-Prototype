@@ -43,3 +43,4 @@ async def save_file(file: UploadFile = File(...)):
         f.write(await file.read())
 
     send_to_gemini(file_path)
+    os.remove(file_path)
