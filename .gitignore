@@ -1,4 +1,4 @@
 venv
 .env
-.mp3
-.pyc
+*.mp3
+*.pyc
