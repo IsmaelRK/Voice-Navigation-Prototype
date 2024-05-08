@@ -44,44 +44,14 @@ def send_to_gemini(mp3_file):
                                   safety_settings=safety_settings)
 
     uploaded_files = []
-
-    def upload_if_needed(pathname: str) -> list[str]:
-        path = Path(pathname)
-        hash_id = hashlib.sha256(path.read_bytes()).hexdigest()
-        try:
-            existing_file = genai.get_file(name=hash_id)
-            return [existing_file.uri]
-        except:
-            pass
-        uploaded_files.append(genai.upload_file(path=path, display_name=hash_id))
-        return [uploaded_files[-1].uri]
-
-    audio_uri = upload_if_needed("./src/speech_recognition/audio0.mp3"),
+    prompt = "Transcreva o audio:"
+    your_file = genai.upload_file(path=mp3_file)
 
     convo = model.start_chat(history=[
-        {
-            "role": "user",
-            "parts": audio_uri,
-        },
-        {
-            "role": "user",
-            "parts": ["Pode transcrever o que foi falado neste audio?"]
-        },
-        {
-            "role": "model",
-            "parts": [
-                "Sim, posso transcrever o que foi falado no áudio. Você disse: \"Pode transcrever o que estou falando?\"."]
-        },
-
-        {
-            "role": "user",
-            "parts": audio_uri
-        },
-
     ])
 
-    convo.send_message("faça o mesmo para o ultimo audio enviado")
-    print(convo.last.text)
+    response = model.generate_content([prompt, your_file])
+    print(response.text)
+
     for uploaded_file in uploaded_files:
         genai.delete_file(name=uploaded_file.name)
-

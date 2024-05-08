@@ -32,7 +32,14 @@ async def save_file(file: UploadFile = File(...)):
 
     file.filename = str(uuid.uuid4()) + ".mp3"
 
-    send_to_gemini(file)
+    audio_dir_path = "./src/audios"
 
-    # with open(file.filename, "wb") as f:
-    #     f.write(await file.read())
+    if not os.path.exists(audio_dir_path):
+        os.makedirs(audio_dir_path)
+
+    file_path = os.path.join(audio_dir_path, file.filename)
+
+    with open(file_path, "wb") as f:
+        f.write(await file.read())
+
+    send_to_gemini(file_path)
