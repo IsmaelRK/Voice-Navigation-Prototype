@@ -12,15 +12,12 @@
     <button id="stopRecording" disabled>Stop Recording</button>
     <br>
 
-    <input type="file" id="audioFileInput" accept="audio/*">
-
     <script>
         let mediaRecorder
         let chunks = []
 
         const startRecordingButton = document.getElementById('startRecording')
         const stopRecordingButton = document.getElementById('stopRecording')
-        const audioFileInput = document.getElementById('audioFileInput')
 
         navigator.mediaDevices.getUserMedia({ audio: true })
             .then(function(stream) {
@@ -34,31 +31,17 @@
                     const blob = new Blob(chunks, { type: 'audio/mpeg' })
                     chunks = []
 
-                    if (audioFileInput.files.length > 0) {
-                        const file = audioFileInput.files[0]
-                        const formData = new FormData()
-                        formData.append('file', file)
+                    const formData = new FormData()
+                    formData.append('file', blob, 'recording.mp3')
 
-                        fetch('http://localhost:8000/upload', {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .then(response => response.text())
-                        .then(data => console.log(data))
-                        .catch(error => console.error('Error:', error))
-                    } else {
+                    fetch('http://localhost:8000/upload', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(data => console.log(data))
+                    .catch(error => console.error('Error:', error))
 
-                        const formData = new FormData()
-                        formData.append('file', blob, 'recording.mp3')
-
-                        fetch('http://localhost:8000/upload', {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .then(response => response.text())
-                        .then(data => console.log(data))
-                        .catch(error => console.error('Error:', error))
-                    }
                 }
             })
             .catch(function(error) {
