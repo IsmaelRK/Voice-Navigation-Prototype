@@ -20,10 +20,10 @@ def send_to_gemini(mp3_file_path, mp3_file_name, speech_form_results_examples):
     gemini_response_to_json = treated_response_to_json(treated_response)
 
     # Debugs
-    print(gemini_transcription_response.text)
-    print(response.text)
-    print(treated_response)
-    print(gemini_response_to_json)
+    print("\n Gemini Transcription: \n", gemini_transcription_response.text)
+    print("\n Gemini JSON Format Response: \n", response.text)
+    print("\n Treated input: \n", treated_response)
+    print("\n JSON: \n", gemini_response_to_json)
 
     genai.delete_file(name=file_to_upload.name)
     return gemini_response_to_json
