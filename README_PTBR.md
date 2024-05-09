@@ -49,8 +49,8 @@ A partir da raiz do projeto, dentro de `Voice-Navigation-Prototype/`.
 
 ### Execute a API
 * Em um terminal na raiz do projeto execute `uvicorn audio_receiver:app --reload`, a aplicação deve iniciar na porta 8000.
-* O gravador de áudio integrado deve estar disponível em `http://localhost:8000/`. Lembre de permitir o uso do microfone.
-* A API deve receber um áudio .mp3 na rota `http://localhost:8000/upload` assim que a gravação for encerrada.
+* O gravador de áudio integrado deve estar disponível em `http://localhost:8000/`. Lembre de permitir o uso do microfone. A gravação será enviada assim que for encerrada.
+* A API deve receber um áudio .mp3 na rota `http://localhost:8000/upload`. Você terá os resultados no terminal.
 
 <br>
 
