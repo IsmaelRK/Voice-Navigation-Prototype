@@ -5,12 +5,12 @@ import google.generativeai as genai
 
 
 def send_to_gemini(mp3_file_path, mp3_file_name, speech_form_results_examples):
-
     load_dotenv()
     api_key = os.getenv("API_KEY")
     genai.configure(api_key=api_key)
 
     generation_config = {
+        "candidate_count": 1,
         "temperature": 1,
         "top_p": 0.95,
         "top_k": 0,
@@ -40,17 +40,43 @@ def send_to_gemini(mp3_file_path, mp3_file_name, speech_form_results_examples):
                                   generation_config=generation_config,
                                   safety_settings=safety_settings)
 
-    prompt = (f"De acordo com o audio, me devolva em json as keys e informações retiradas da fala, seguem exemplos de "
-              f"retorno, seja exato e devolva apenas os resultados na lingua utilizada "
-              f"no audio: {speech_form_results_examples}. Sua saida será um json, para os preços não use a moeda "
-              f"apenas o valor")
+    prompt = "Transcreva o audio"
     file_to_upload = genai.upload_file(path=mp3_file_path, display_name=mp3_file_name)
+    gemini_transcription_response = model.generate_content([prompt, file_to_upload])
 
-    response = model.generate_content([prompt, file_to_upload])
-    print(response.text[8:-6])
+    print(gemini_transcription_response.text)
 
-    # json_data = json.loads(response.text.strip('`').strip('json').strip('\n').strip())
-    json_data = json.loads(response.text[8:-6])
-    print(json.dumps(json_data, indent=4))
+
+    prompt = (f"De acordo com o texto {gemini_transcription_response}, transforme para json, sem levar em consideração "
+              f"a moeda, apenas valores, mantenha as falas do usuario na linguagem do texto, não adicione campos que não estão citados nos exemplos, alguns exemplos: {speech_form_results_examples}")
+
+    chat = model.start_chat(history=[])
+    response = chat.send_message(prompt)
+    print(response.text)
+
+    _, treated_response = response.text.split("{", 1)
+    treated_response, _ = treated_response.split("}", 1)
+    treated_response = "{" + treated_response + "}"
+
+    # for index, character in enumerate(response.text):
+    #
+    #     if character == "{":
+    #         treated_response += character[index:]
+    #
+    #
+    #     passed_start_brace = True if character == "{" else False
+    #     passed_end_brace = True if character == "}" else False
+    #
+    #     if passed_end_brace:
+    #         treated_response += character
+    #         break
+    #     if passed_start_brace:
+    #         treated_response += character
+
+    print(treated_response)
+    json_data = json.loads(treated_response)
+    gemini_response_to_json = json.dumps(json_data, indent=4)
+    print(gemini_response_to_json)
 
     genai.delete_file(name=file_to_upload.name)
+    return gemini_response_to_json

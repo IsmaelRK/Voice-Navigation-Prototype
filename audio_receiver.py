@@ -75,14 +75,5 @@ async def save_file(file: UploadFile = File(...)):
 
     ]
 
-    # speech_form = {
-    #
-    #     "intention": "buy/sell/login",
-    #     "item": "...",
-    #     "minimum_price": "",
-    #     "maximum_price": "",
-    #
-    # }
-
     send_to_gemini(file_path, file_uuid, speech_form_examples)
     os.remove(file_path)
