@@ -1,6 +1,6 @@
 # Protótipo de navegação por voz
 
-[Change to English](./README)
+[Change to English](./README.md)
 
 ![Static Badge](https://img.shields.io/badge/Gemini-blue)
 ![Static Badge](https://img.shields.io/badge/Python-orange)
