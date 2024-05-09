@@ -1,6 +1,6 @@
-# Protótipo de navegação por voz
+# Voice Navigation Prototype
 
-[Change to English](./README_ENG.md)
+[Mudar para Português](./README_PTBR)
 
 ![Static Badge](https://img.shields.io/badge/Gemini-blue)
 ![Static Badge](https://img.shields.io/badge/Python-orange)
@@ -10,67 +10,70 @@
 
 <br>
 
-Ressalto que este é um protótipo e possui alguns bugs, sendo necessária uma melhor modelagem da IA para qualquer uso em 
-produção, deixo claro que o protótipo foi feito para ser flexível, podendo ser adaptado para diversos cenário, no caso 
-atual, esta servindo com alguns exemplos simples, que podem ser conferidos em `alura-ai-project/src/speech_recognition/speech_form_examples.py`.
+Disclaimer: This is a prototype and has some bugs. Improved AI modeling is necessary for any production use. 
+The prototype is designed to be flexible and adaptable to various scenarios. In its current state, it serves with some 
+simple examples, which can be found in `alura-ai-project/src/speech_recognition/speech_form_examples.py`.
 
-## Sobre
+## About
 
-É um protótipo de reconhecimento de fala que foca em ajudar pessoas com deficiência, onde se pode, atravéz da fala, 
-reconhecer a ação que o usuário quer tomar, e outras características diversas, tudo deve ser definido posteriormente e 
-ressalto que a IA deve ser melhor moldada para a determinada aplicação.
+This project is a speech recognition prototype focused on assisting people with disabilities. Through speech, it can 
+recognize the user's intended action and other characteristics. These details are defined previously, and it's important to 
+note that the AI needs further refinement for specific applications.
 
-Se encontra com alguns exemplos simples, onde se pode escolher opções dentre, comprar, vender e logar.
-Dentre os bugs conhecidos, posso citar principalmente o retorno da IA, que é necessário ser um json, a interpretação das
-necessidades do usuário pode ser melhorada também. No estado atual é um protótipo simples com poucos exemplos dados a IA,
-que podem ser melhorados, inclusive fornecendo um histórico customizado á mesma em `speech_recognition.py`, na função 
-`set_gemini_api_settings()`.
-
-Se trata majoritariamente de um código em python, utilizando FastAPI, que renderiza uma página html simples com um gravador
-de áudio em js integrado á mesma, possui um gravador de audio built-in para que se necessário possa ser feito o teste da API
-sem haver necessidade outro serviço terceirizado.
-
-Em outras palavras é uma API que recebe um áudio, envia para uma API que deve retornar um json, tendo o objetivo de
-reconhecer para onde e como o usuário quer navegar na aplicação, tendo estas informações no json retornado pela interpretação
-do áudio pela IA
-
-<br>
-
-## Como executar
-
-A partir da raiz do projeto, dentro de `alura-ai-project/`.
+The prototype includes simple examples where users can choose options like buying, selling, or logging in. Known bugs 
+include the AI response format (requiring JSON) and the interpretation of user needs, which can be improved. 
+Currently, it's a basic prototype with limited examples provided to the AI. These can be enhanced, including providing a
+customized history in the `set_gemini_api_settings()` function within `speech_recognition.py`.
 
 
-### Instale as libs necessárias: `pip install -r required.txt`.
-* Sugiro que use uma venv para o python `python -m venv venv`, lembre de ativa-lá.
+The code is primarily in Python, utilizing FastAPI, and rendering a simple HTML page with an integrated JavaScript audio 
+recorder. This built-in recorder allows for API testing without relying on external services.
 
-### Crie seu .env
-* Na raiz do projeto, crie um arquivo `.env` com a chave `API_KEY`, e insira sua chave de api, lembre de não compartilhar este arquivo.
-
-### Execute a API
-* Em um terminal na raiz do projeto execute `uvicorn audio_receiver:app --reload`, a aplicação deve iniciar na porta 8000.
-* O gravador de áudio integrado deve estar disponível em `http://localhost:8000/`. Lembre de permitir o uso do microfone.
-* A API deve receber um áudio .mp3 na rota `http://localhost:8000/upload` assim que a gravação for encerrada.
+In essence, it's an API that receives audio, sends it to another API for processing, and expects a JSON response. 
+The goal is to recognize the user's desired navigation and resources (like what to buy and for how much) 
+within the application based on the interpretation of the
+audio by the AI.
 
 <br>
 
-## Estrutura do projeto
+## How to Run
 
-* Na raiz do projeto, dentro de `alura-ai-project/`, possuimos o arquivo principal `audio_receiver.py`.
-  * Este arquivo possui configurações da API, como CORS e as rotas declaradas, `/ e /upload`, respectivamente GET e POST.
-  * As funções associadas as rotas estão no mesmo arquivo visto que como são poucas e de baixa complexidade, não há necessidade de separar as mesmas. Sugiro que dependendo das demandas do projeto, tamanho e complexidade organize de outra forma.
-  * Ressalto que os áudios enviados e posteriormente salvos em `alura-ai-project/src/audios`, após seu processamento são deletados do sistema de arquivos, tanto local, quanto do Gemini.
+Starting from the project root `alura-ai-project/`:
 
 
-* Na raiz do projeto, possuímos o diretório `static/`, que contém `index.html` e `style.css`
-  * O `index.html` possui js inserido diretamente, não houve modularização, pois seriam arquivos únicos, não havendo necessidade de tal organização no momento.
-  * O `style.css` possui a estilização de `index.html`, sendo uma estilização extremamente simples, pois não é o objetivo principal da aplicação, a não ser para algum eventual teste.
-  
+### Install Required Libraries: `pip install -r required.txt`.
+* It's recommended to use a Python virtual environment: `python -m venv venv` (remember to activate it).
 
-* Na raiz do projeto, possuímos o diretório `src/speech_recognition/`, que contém `speech_recognition.py` e `speech_form_examples.py`
-  * `speech_recognition.py` possui algumas funções: <br>
-    * `send_to_gemini()`, recebe o caminho e nome do `.mp3` além de uma lista de exemplos de resposta, envia o arquivo para Gemini e retorna o json. Se trata função principal.
-    * `treat_response()`, recebe uma string, e retorna a mesma pronta para ser convertida para json.
-    * `treated_response_to_json()`, recebe uma string tratada pela função anteriormente citada e retorna no formato json.
-    * `def set_gemini_api_settings()`, Contém configuração da API do Google Gemini, e o history do chat, que se necessário pode ser populado de acordo com suas necessidades, retorna algumas variáveis necessárias a função principal.
-  * `speech_form_examples.py` possui a função `get_examples()`, que retorna uma lista com alguns exemplos enviados a Gemini.
+
+### Create Your .env File
+
+* In the project root, create a file named `.env` with the key `API_KEY`. Insert your API key and keep this file secure.
+
+
+### Run the API
+* Open a terminal in the project root and execute `uvicorn audio_receiver:app --reload`. The application should start on port 8000.
+* The integrated audio recorder should be accessible at `http://localhost:8000/`. Ensure microphone usage is allowed.
+* The API expects an .mp3 audio file at the route `http://localhost:8000/upload` once the recording ends.
+
+<br>
+
+## Project Structure
+* At project Root `alura-ai-project/` there is `audio_receiver.py`.
+  * Contains API configurations like CORS and declared routes (/ and /upload for GET and POST requests, respectively).
+  * Route-associated functions are in the same file due to their simplicity and small number. Consider reorganizing for larger, more complex projects.
+  * Note that uploaded audio files are saved in `alura-ai-project/src/audios` and deleted from both local and Gemini file systems after processing.
+
+
+* At project Root `alura-ai-project/` there is `static/`:
+  * `index.html`: Contains embedded JavaScript for the audio recorder. No modularization was implemented due to the single-file nature.
+  * `style.css`: Provides basic styling for `index.html`. Styling is minimal as it's not the primary focus of the application.
+
+
+* At project Root `alura-ai-project/` there is `src/speech_recognition/`:
+  * `speech_recognition.py`:
+    * `send_to_gemini()`: Receives the path and name of the .mp3 file, along with a list of response examples. Sends the file to Gemini and returns the JSON response. This is the main function.
+    * `treat_response()`: Receives a string and returns it formatted for JSON conversion.
+    * `treated_response_to_json()`: Receives a treated string from the previous function and returns it in JSON format.
+    * `set_gemini_api_settings()`: Contains Google Gemini API settings and chat history, which can be populated as needed. Returns variables required for the main function.
+  * `speech_form_examples.py`:
+    * `get_examples()`: Returns a list with examples for the Gemini API.
