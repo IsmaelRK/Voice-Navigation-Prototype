@@ -5,7 +5,7 @@ Disclaimer: This is a prototype and has some bugs. Improved AI modeling is neces
 The prototype is designed to be flexible and adaptable to various scenarios. In its current state, it serves as a simple 
 example, which can be found in `alura-ai-project/src/speech_recognition/speech_form_examples.py`.
 
-##About
+## About
 
 This project is a speech recognition prototype focused on assisting people with disabilities. Through speech, it can 
 recognize the user's intended action and other characteristics. These details are defined previously, and it's important to 
