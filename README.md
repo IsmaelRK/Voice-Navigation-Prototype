@@ -54,6 +54,7 @@ Starting from the project root `Voice-Navigation-Prototype/`:
 * Open a terminal in the project root and execute `uvicorn audio_receiver:app --reload`. The application should start on port 8000.
 * The integrated audio recorder should be accessible at `http://localhost:8000/`. Ensure microphone usage is allowed. The audio will be sent once the recording ends.
 * The API expects an .mp3 audio file at the route `http://localhost:8000/upload`. You will have the results at the terminal.
+* An example of speech input for this application would be 'I want to buy a pen for a maximum of ten thousand dollars.' Please note that unexpected bugs may occur due to the AI configuration, which would require adjustments for larger-scale use.
 
 <br>
 
