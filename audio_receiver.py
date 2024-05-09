@@ -24,7 +24,6 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.post("/upload/")
 async def save_file(file: UploadFile = File(...)):
-
     if file.content_type != "audio/mpeg":
         return JSONResponse(status_code=415, content={"message": "File type not supported, use .mp3"})
 
@@ -40,5 +39,50 @@ async def save_file(file: UploadFile = File(...)):
     with open(file_path, "wb") as f:
         f.write(await file.read())
 
-    send_to_gemini(file_path, file_uuid)
+    speech_form_examples = [
+
+        {
+
+            "intention": "buy",
+            "item": "black car toy",
+            "minimum_price": None,
+            "maximum_price": None,
+
+        },
+
+        {
+
+            "intention": "buy",
+            "item": "gamer computer",
+            "minimum_price": "5000",
+            "maximum_price": "7000",
+
+        },
+
+        {
+
+            "intention": "sell",
+            "item": "car",
+            "price": "35000",
+            "description": "Honda black car with air-conditioner",
+
+        },
+
+        {
+          "login": "useremail@email.com",
+          "password": "user_password",
+        }
+
+    ]
+
+    # speech_form = {
+    #
+    #     "intention": "buy/sell/login",
+    #     "item": "...",
+    #     "minimum_price": "",
+    #     "maximum_price": "",
+    #
+    # }
+
+    send_to_gemini(file_path, file_uuid, speech_form_examples)
     os.remove(file_path)

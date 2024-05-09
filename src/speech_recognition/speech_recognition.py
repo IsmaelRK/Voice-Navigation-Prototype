@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 
 
-def send_to_gemini(mp3_file_path, mp3_file_name):
+def send_to_gemini(mp3_file_path, mp3_file_name, speech_form_results_examples):
 
     load_dotenv()
     api_key = os.getenv("API_KEY")
@@ -39,7 +39,9 @@ def send_to_gemini(mp3_file_path, mp3_file_name):
                                   generation_config=generation_config,
                                   safety_settings=safety_settings)
 
-    prompt = "Transcreva o audio:"
+    prompt = (f"De acordo com o audio, me devolva em json as keys e informações retiradas da fala, seguem exemplos de "
+              f"retorno, seja exato e devolva apenas os resultados na lingua utilizada "
+              f"no audio: {speech_form_results_examples}")
     file_to_upload = genai.upload_file(path=mp3_file_path, display_name=mp3_file_name)
 
     response = model.generate_content([prompt, file_to_upload])
