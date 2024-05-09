@@ -5,6 +5,7 @@
 ![Static Badge](https://img.shields.io/badge/Gemini-blue)
 ![Static Badge](https://img.shields.io/badge/Python-orange)
 ![Static Badge](https://img.shields.io/badge/FastApi-green)
+![Static Badge](https://img.shields.io/badge/JSON-yellow)
 
 
 <br>
