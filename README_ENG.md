@@ -1,5 +1,13 @@
 # Voice Navigation Prototype
 
+[Mudar para Português](./README.md)
+
+![Static Badge](https://img.shields.io/badge/Gemini-blue)
+![Static Badge](https://img.shields.io/badge/Python-orange)
+![Static Badge](https://img.shields.io/badge/FastApi-green)
+
+
+<br>
 
 Disclaimer: This is a prototype and has some bugs. Improved AI modeling is necessary for any production use. 
 The prototype is designed to be flexible and adaptable to various scenarios. In its current state, it serves with some 

@@ -1,5 +1,13 @@
 # Protótipo de navegação por voz
 
+[Change to English](./README_ENG.md)
+
+![Static Badge](https://img.shields.io/badge/Gemini-blue)
+![Static Badge](https://img.shields.io/badge/Python-orange)
+![Static Badge](https://img.shields.io/badge/FastApi-green)
+
+
+<br>
 
 Ressalto que este é um protótipo e possui alguns bugs, sendo necessária uma melhor modelagem da IA para qualquer uso em 
 produção, deixo claro que o protótipo foi feito para ser flexível, podendo ser adaptado para diversos cenário, no caso 
