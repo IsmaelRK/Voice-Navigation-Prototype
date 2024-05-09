@@ -12,7 +12,7 @@
 
 Disclaimer: This is a prototype and has some bugs. Improved AI modeling is necessary for any production use. 
 The prototype is designed to be flexible and adaptable to various scenarios. In its current state, it serves with some 
-simple examples, which can be found in `alura-ai-project/src/speech_recognition/speech_form_examples.py`.
+simple examples, which can be found in `Voice-Navigation-Prototype/src/speech_recognition/speech_form_examples.py`.
 
 ## About
 
@@ -38,7 +38,7 @@ audio by the AI.
 
 ## How to Run
 
-Starting from the project root `alura-ai-project/`:
+Starting from the project root `Voice-Navigation-Prototype/`:
 
 
 ### Install Required Libraries: `pip install -r required.txt`.
@@ -58,18 +58,18 @@ Starting from the project root `alura-ai-project/`:
 <br>
 
 ## Project Structure
-* At project Root `alura-ai-project/` there is `audio_receiver.py`.
+* At project Root `Voice-Navigation-Prototype/` there is `audio_receiver.py`.
   * Contains API configurations like CORS and declared routes (/ and /upload for GET and POST requests, respectively).
   * Route-associated functions are in the same file due to their simplicity and small number. Consider reorganizing for larger, more complex projects.
-  * Note that uploaded audio files are saved in `alura-ai-project/src/audios` and deleted from both local and Gemini file systems after processing.
+  * Note that uploaded audio files are saved in `Voice-Navigation-Prototype/src/audios` and deleted from both local and Gemini file systems after processing.
 
 
-* At project Root `alura-ai-project/` there is `static/`:
+* At project Root `Voice-Navigation-Prototype/` there is `static/`:
   * `index.html`: Contains embedded JavaScript for the audio recorder. No modularization was implemented due to the single-file nature.
   * `style.css`: Provides basic styling for `index.html`. Styling is minimal as it's not the primary focus of the application.
 
 
-* At project Root `alura-ai-project/` there is `src/speech_recognition/`:
+* At project Root `Voice-Navigation-Prototype/` there is `src/speech_recognition/`:
   * `speech_recognition.py`:
     * `send_to_gemini()`: Receives the path and name of the .mp3 file, along with a list of response examples. Sends the file to Gemini and returns the JSON response. This is the main function.
     * `treat_response()`: Receives a string and returns it formatted for JSON conversion.

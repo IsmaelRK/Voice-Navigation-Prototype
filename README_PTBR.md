@@ -12,7 +12,7 @@
 
 Ressalto que este é um protótipo e possui alguns bugs, sendo necessária uma melhor modelagem da IA para qualquer uso em 
 produção, deixo claro que o protótipo foi feito para ser flexível, podendo ser adaptado para diversos cenário, no caso 
-atual, esta servindo com alguns exemplos simples, que podem ser conferidos em `alura-ai-project/src/speech_recognition/speech_form_examples.py`.
+atual, esta servindo com alguns exemplos simples, que podem ser conferidos em `Voice-Navigation-Prototype/src/speech_recognition/speech_form_examples.py`.
 
 ## Sobre
 
@@ -38,7 +38,7 @@ do áudio pela IA
 
 ## Como executar
 
-A partir da raiz do projeto, dentro de `alura-ai-project/`.
+A partir da raiz do projeto, dentro de `Voice-Navigation-Prototype/`.
 
 
 ### Instale as libs necessárias: `pip install -r required.txt`.
@@ -56,10 +56,10 @@ A partir da raiz do projeto, dentro de `alura-ai-project/`.
 
 ## Estrutura do projeto
 
-* Na raiz do projeto, dentro de `alura-ai-project/`, possuimos o arquivo principal `audio_receiver.py`.
+* Na raiz do projeto, dentro de `Voice-Navigation-Prototype/`, possuimos o arquivo principal `audio_receiver.py`.
   * Este arquivo possui configurações da API, como CORS e as rotas declaradas, `/ e /upload`, respectivamente GET e POST.
   * As funções associadas as rotas estão no mesmo arquivo visto que como são poucas e de baixa complexidade, não há necessidade de separar as mesmas. Sugiro que dependendo das demandas do projeto, tamanho e complexidade organize de outra forma.
-  * Ressalto que os áudios enviados e posteriormente salvos em `alura-ai-project/src/audios`, após seu processamento são deletados do sistema de arquivos, tanto local, quanto do Gemini.
+  * Ressalto que os áudios enviados e posteriormente salvos em `Voice-Navigation-Prototype/src/audios`, após seu processamento são deletados do sistema de arquivos, tanto local, quanto do Gemini.
 
 
 * Na raiz do projeto, possuímos o diretório `static/`, que contém `index.html` e `style.css`
