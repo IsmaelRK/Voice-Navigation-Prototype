@@ -1,7 +1,6 @@
 import os
 import uuid
 import sys
-from asyncio import exceptions
 from pathlib import Path
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse, FileResponse
@@ -30,7 +29,7 @@ async def load_index():
 
 
 @app.post("/upload/")
-async def save_file(file: UploadFile = File(...)):
+async def treat_upload(file: UploadFile = File(...)):
 
     if file.content_type != "audio/mpeg":
         return JSONResponse(status_code=415, content={"message": "File type not supported, use .mp3"})

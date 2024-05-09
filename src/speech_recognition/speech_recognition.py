@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 
 
-def send_to_gemini(mp3_file_path, mp3_file_name, speech_form_results_examples):
+def send_to_gemini(mp3_file_path, mp3_file_name, speech_form_results_examples) -> json:
     model, chat = set_gemini_api_settings()
 
     prompt = "Transcreva o audio"
