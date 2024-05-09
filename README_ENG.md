@@ -2,8 +2,8 @@
 
 
 Disclaimer: This is a prototype and has some bugs. Improved AI modeling is necessary for any production use. 
-The prototype is designed to be flexible and adaptable to various scenarios. In its current state, it serves as a simple 
-example, which can be found in `alura-ai-project/src/speech_recognition/speech_form_examples.py`.
+The prototype is designed to be flexible and adaptable to various scenarios. In its current state, it serves with some 
+simple examples, which can be found in `alura-ai-project/src/speech_recognition/speech_form_examples.py`.
 
 ## About
 
@@ -17,7 +17,7 @@ Currently, it's a basic prototype with limited examples provided to the AI. Thes
 customized history in the `set_gemini_api_settings()` function within `speech_recognition.py`.
 
 
-The code is primarily in Python, utilizing FastAPI to render a simple HTML page with an integrated JavaScript audio 
+The code is primarily in Python, utilizing FastAPI, and rendering a simple HTML page with an integrated JavaScript audio 
 recorder. This built-in recorder allows for API testing without relying on external services.
 
 In essence, it's an API that receives audio, sends it to another API for processing, and expects a JSON response. 
@@ -32,19 +32,19 @@ audio by the AI.
 Starting from the project root `alura-ai-project/`:
 
 
-###Install Required Libraries: `pip install -r required.txt`.
+### Install Required Libraries: `pip install -r required.txt`.
 * It's recommended to use a Python virtual environment: `python -m venv venv` (remember to activate it).
 
 
 ### Create Your .env File
 
-* In the project root, create a file named `.env` with the key API_KEY. Insert your API key and keep this file secure.
+* In the project root, create a file named `.env` with the key `API_KEY`. Insert your API key and keep this file secure.
 
 
 ### Run the API
-* Open a terminal in the project root and execute uvicorn audio_receiver:app --reload. The application should start on port 8000.
-* The integrated audio recorder should be accessible at http://localhost:8000/. Ensure microphone usage is allowed.
-* The API expects an .mp3 audio file at the route http://localhost:8000/upload once the recording ends.
+* Open a terminal in the project root and execute `uvicorn audio_receiver:app --reload`. The application should start on port 8000.
+* The integrated audio recorder should be accessible at `http://localhost:8000/`. Ensure microphone usage is allowed.
+* The API expects an .mp3 audio file at the route `http://localhost:8000/upload` once the recording ends.
 
 <br>
 
