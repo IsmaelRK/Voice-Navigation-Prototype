@@ -5,6 +5,46 @@ import google.generativeai as genai
 
 
 def send_to_gemini(mp3_file_path, mp3_file_name, speech_form_results_examples):
+    model, chat = set_gemini_api_settings()
+
+    prompt = "Transcreva o audio"
+    file_to_upload = genai.upload_file(path=mp3_file_path, display_name=mp3_file_name)
+    gemini_transcription_response = model.generate_content([prompt, file_to_upload])
+
+    prompt = (f"De acordo com o texto {gemini_transcription_response}, transforme para json, sem levar em consideração "
+              f"a moeda, apenas valores, mantenha as falas do usuario na linguagem do texto, não adicione campos que "
+              f"não estão citados nos exemplos, alguns exemplos: {speech_form_results_examples}")
+
+    response = chat.send_message(prompt)
+    treated_response = treat_response(response.text)
+    gemini_response_to_json = treated_response_to_json(treated_response)
+
+    # Debugs
+    print(gemini_transcription_response.text)
+    print(response.text)
+    print(treated_response)
+    print(gemini_response_to_json)
+
+    genai.delete_file(name=file_to_upload.name)
+    return gemini_response_to_json
+
+
+def treat_response(text_response) -> str:
+    _, treated_response = text_response.split("{", 1)
+    treated_response, _ = treated_response.split("}", 1)
+    treated_response = "{" + treated_response + "}"
+
+    return treated_response
+
+
+def treated_response_to_json(treated_response) -> json:
+    json_data = json.loads(treated_response)
+    gemini_response_to_json = json.dumps(json_data, indent=4)
+
+    return gemini_response_to_json
+
+
+def set_gemini_api_settings():
     load_dotenv()
     api_key = os.getenv("API_KEY")
     genai.configure(api_key=api_key)
@@ -40,43 +80,6 @@ def send_to_gemini(mp3_file_path, mp3_file_name, speech_form_results_examples):
                                   generation_config=generation_config,
                                   safety_settings=safety_settings)
 
-    prompt = "Transcreva o audio"
-    file_to_upload = genai.upload_file(path=mp3_file_path, display_name=mp3_file_name)
-    gemini_transcription_response = model.generate_content([prompt, file_to_upload])
-
-    print(gemini_transcription_response.text)
-
-
-    prompt = (f"De acordo com o texto {gemini_transcription_response}, transforme para json, sem levar em consideração "
-              f"a moeda, apenas valores, mantenha as falas do usuario na linguagem do texto, não adicione campos que não estão citados nos exemplos, alguns exemplos: {speech_form_results_examples}")
-
     chat = model.start_chat(history=[])
-    response = chat.send_message(prompt)
-    print(response.text)
 
-    _, treated_response = response.text.split("{", 1)
-    treated_response, _ = treated_response.split("}", 1)
-    treated_response = "{" + treated_response + "}"
-
-    # for index, character in enumerate(response.text):
-    #
-    #     if character == "{":
-    #         treated_response += character[index:]
-    #
-    #
-    #     passed_start_brace = True if character == "{" else False
-    #     passed_end_brace = True if character == "}" else False
-    #
-    #     if passed_end_brace:
-    #         treated_response += character
-    #         break
-    #     if passed_start_brace:
-    #         treated_response += character
-
-    print(treated_response)
-    json_data = json.loads(treated_response)
-    gemini_response_to_json = json.dumps(json_data, indent=4)
-    print(gemini_response_to_json)
-
-    genai.delete_file(name=file_to_upload.name)
-    return gemini_response_to_json
+    return model, chat
