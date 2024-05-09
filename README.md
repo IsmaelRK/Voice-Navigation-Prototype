@@ -1,13 +1,13 @@
 # Protótipo de navegação por voz
 
 
-Ressalto que este é um protótipo e possui alguns bugs, sendo necessário uma melhor modelagem da IA para qualquer uso em 
-produção, deixo claro que o protótipo foi feito para ser flexivel, podendo ser adaptado para diversos cenário, no caso 
+Ressalto que este é um protótipo e possui alguns bugs, sendo necessária uma melhor modelagem da IA para qualquer uso em 
+produção, deixo claro que o protótipo foi feito para ser flexível, podendo ser adaptado para diversos cenário, no caso 
 atual, esta servindo com alguns exemplos simples, que podem ser conferidos em `alura-ai-project/src/speech_recognition/speech_form_examples.py`.
 
 ## Sobre
 
-É um protótipo de reconhecimento de fala que foca em ajudar pessoas com deficiencia, onde se pode, atravez da fala, 
+É um protótipo de reconhecimento de fala que foca em ajudar pessoas com deficiência, onde se pode, atravéz da fala, 
 reconhecer a ação que o usuário quer tomar, e outras características diversas, tudo deve ser definido posteriormente e 
 ressalto que a IA deve ser melhor moldada para a determinada aplicação.
 
@@ -40,7 +40,7 @@ A partir da raiz do projeto, dentro de `alura-ai-project/`.
 
 ### Execute a API
 * Em um terminal na raiz do projeto execute `uvicorn audio_receiver:app --reload`, a aplicação deve iniciar na porta 8000.
-* O gravador de audio integrado deve estar disponivel em `http://localhost:8000/`. Lembre de permitir o uso do microfone.
+* O gravador de áudio integrado deve estar disponível em `http://localhost:8000/`. Lembre de permitir o uso do microfone.
 * A API deve receber um áudio .mp3 na rota `http://localhost:8000/upload` assim que a gravação for encerrada.
 
 <br>
@@ -50,15 +50,15 @@ A partir da raiz do projeto, dentro de `alura-ai-project/`.
 * Na raiz do projeto, dentro de `alura-ai-project/`, possuimos o arquivo principal `audio_receiver.py`.
   * Este arquivo possui configurações da API, como CORS e as rotas declaradas, `/ e /upload`, respectivamente GET e POST.
   * As funções associadas as rotas estão no mesmo arquivo visto que como são poucas e de baixa complexidade, não há necessidade de separar as mesmas. Sugiro que dependendo das demandas do projeto, tamanho e complexidade organize de outra forma.
-  * Ressalto que os audios enviados e posteriormente salvos em `alura-ai-project/src/audios`, após seu processamento são deletados do sistema de arquivos, tanto local, quanto do Gemini.
+  * Ressalto que os áudios enviados e posteriormente salvos em `alura-ai-project/src/audios`, após seu processamento são deletados do sistema de arquivos, tanto local, quanto do Gemini.
 
 
-* Na raiz do projeto, possuimos uma pasta `static/`, que possue `index.html` e `style.css`
-  * O `index.html` possui js inserido diretamente, não houve modularização, pois seriam arquivos unicos, não havendo necessidade de tal organização no momento.
+* Na raiz do projeto, possuímos o diretório `static/`, que contém `index.html` e `style.css`
+  * O `index.html` possui js inserido diretamente, não houve modularização, pois seriam arquivos únicos, não havendo necessidade de tal organização no momento.
   * O `style.css` possui a estilização de `index.html`, sendo uma estilização extremamente simples, pois não é o objetivo principal da aplicação, a não ser para algum eventual teste.
   
 
-* Na raiz do projeto, possuimos uma pasta `src/speech_recognition/`, que possui `speech_recognition.py` e `speech_form_examples.py`
+* Na raiz do projeto, possuímos o diretório `src/speech_recognition/`, que contém `speech_recognition.py` e `speech_form_examples.py`
   * `speech_recognition.py` possui algumas funções: <br>
     * `send_to_gemini()`, recebe o caminho e nome do `.mp3` além de uma lista de exemplos de resposta, envia o arquivo para Gemini e retorna o json. Se trata função principal.
     * `treat_response()`, recebe uma string, e retorna a mesma pronta para ser convertida para json.
