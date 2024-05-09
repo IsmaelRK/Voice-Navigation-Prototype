@@ -1,6 +1,6 @@
 # Voice Navigation Prototype
 
-[Mudar para Português](./README_PTBR)
+[Mudar para Português](./README_PTBR.md)
 
 ![Static Badge](https://img.shields.io/badge/Gemini-blue)
 ![Static Badge](https://img.shields.io/badge/Python-orange)
