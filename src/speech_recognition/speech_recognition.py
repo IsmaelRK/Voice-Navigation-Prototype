@@ -16,8 +16,11 @@ def send_to_gemini(mp3_file_path, mp3_file_name, speech_form_results_examples):
               f"não estão citados nos exemplos, alguns exemplos: {speech_form_results_examples}")
 
     response = chat.send_message(prompt)
+    print(response)
     treated_response = treat_response(response.text)
+    print(treated_response)
     gemini_response_to_json = treated_response_to_json(treated_response)
+    print(gemini_response_to_json)
 
     # Debugs
     print("\n Gemini Transcription: \n", gemini_transcription_response.text)
@@ -33,11 +36,15 @@ def treat_response(text_response) -> str:
     _, treated_response = text_response.split("{", 1)
     treated_response, _ = treated_response.split("}", 1)
     treated_response = "{" + treated_response + "}"
+    treated_response = treated_response.replace("'", '"')
+    treated_response = treated_response.strip()
+    treated_response = treated_response.replace("None", "null")
 
     return treated_response
 
 
 def treated_response_to_json(treated_response) -> json:
+
     json_data = json.loads(treated_response)
     gemini_response_to_json = json.dumps(json_data, indent=4)
 

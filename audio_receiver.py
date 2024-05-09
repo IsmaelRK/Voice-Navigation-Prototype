@@ -1,8 +1,8 @@
 import os
 import uuid
 import sys
+from asyncio import exceptions
 from pathlib import Path
-from urllib.request import Request
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -48,5 +48,11 @@ async def save_file(file: UploadFile = File(...)):
 
     speech_form_examples = get_examples()
 
-    send_to_gemini(file_path, file_uuid, speech_form_examples)
-    os.remove(file_path)
+    try:
+        send_to_gemini(file_path, file_uuid, speech_form_examples)
+
+    except Exception as error:
+        print("Something went wrong, error: ", error)
+
+    finally:
+        os.remove(file_path)
